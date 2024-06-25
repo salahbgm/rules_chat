@@ -7,25 +7,8 @@ from langchain.schema.document import Document
 from embedding import get_embedding_function
 from langchain_community.vectorstores import Chroma
 
-
 CHROMA_PATH = "chroma"
-DATA_PATH = "data"
-
-
-def main():
-
-    # Check if the database should be cleared (using the --clear flag).
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--reset", action="store_true", help="Reset the database.")
-    args = parser.parse_args()
-    if args.reset:
-        print("✨ Clearing Database")
-        clear_database()
-
-    # Create (or update) the data store.
-    documents = load_documents()
-    chunks = split_documents(documents)
-    add_to_chroma(chunks)
+DATA_PATH = "data/board_games"
 
 
 def load_documents():
@@ -73,7 +56,6 @@ def add_to_chroma(chunks: list[Document]):
 
 
 def calculate_chunk_ids(chunks):
-
     # This will create IDs like "data/monopoly.pdf:6:2"
     # Page Source : Page Number : Chunk Index
 
@@ -103,7 +85,23 @@ def calculate_chunk_ids(chunks):
 
 def clear_database():
     if os.path.exists(CHROMA_PATH):
+        print("✨ Clearing Database")
         shutil.rmtree(CHROMA_PATH)
+        print("✅ Database Cleared")
+    else:
+        print("❕ Database does not exist. Nothing to clear.")
+    return
+
+
+def main(reset_db=False):
+    if reset_db is True:
+        clear_database()
+        return
+
+    # Create (or update) the data store.
+    documents = load_documents()
+    chunks = split_documents(documents)
+    add_to_chroma(chunks)
 
 
 if __name__ == "__main__":
