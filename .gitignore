@@ -1,2 +1,6 @@
 ragapp
 data
+# For JetBrains IDEs
+.idea
+
+chroma
