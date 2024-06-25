@@ -15,6 +15,16 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 CHROMA_PATH = "../data/VectorStores/chroma"
 
 PROMPT_TEMPLATE = """
+You are an assistant helping a user with a question about board games. There will be a context followed by a question.
+You need to answer the question based on the context provided.
+
+If the question does not write the name of the board game, ask the user to provide the name of the board game and you
+cannot answer the question without the name of the board game, even if context is provided, do not answer the question.
+
+If you don't know the answer, don't make up an answer. Just answer that you don't know the answer.
+
+
+
 Answer the question based only on the following context:
 
 {context}
@@ -52,10 +62,15 @@ def query_rag(query_text: str):
     response_text = model.invoke(prompt)
 
     sources = [doc.metadata.get("id", None) for doc, _score in results]
-    formatted_response = f"Response: {response_text}\nSources: {sources}"
+    formatted_response = {
+        "response": response_text,
+        "sources": sources,
+    }
     print(formatted_response)
+    print(formatted_response['response'].content)
+    print(formatted_response['sources'])
     return formatted_response
 
 
 if __name__ == "__main__":
-    query_rag("What is the end of the Uno ?")
+    query_rag("Comment commence une partie de la Bonne paye ?")

@@ -8,16 +8,17 @@ from dotenv import load_dotenv
 load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-LOCAL = os.getenv("LOCAL", True)
+LOCAL = os.getenv("LOCAL")
 
 
 def get_embedding_function():
     # embeddings = BedrockEmbeddings(
     #   credentials_profile_name="default", region_name="us-east-1"
     # )
-    if LOCAL:
+
+    if LOCAL is True:
         embeddings = OllamaEmbeddings(model="llama3")
-    elif LOCAL is False and OPENAI_API_KEY is not None:
+    elif OPENAI_API_KEY is not None:
         embeddings = OpenAIEmbeddings(model="text-embedding-3-small",
                                       openai_api_key=OPENAI_API_KEY)
     else:
