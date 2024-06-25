@@ -1,5 +1,5 @@
 import streamlit as st
-from query_data import query_rag
+from scripts.query_data import query_rag
 
 
 def display_messages(messages):

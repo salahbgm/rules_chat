@@ -4,10 +4,10 @@ import shutil
 from langchain_community.document_loaders import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
-from embedding import get_embedding_function
+from scripts.embedding import get_embedding_function
 from langchain_community.vectorstores import Chroma
 
-CHROMA_PATH = "chroma"
+CHROMA_PATH = "data/VectorStores/chroma"
 DATA_PATH = "data/board_games"
 
 
@@ -66,6 +66,8 @@ def calculate_chunk_ids(chunks):
         source = chunk.metadata.get("source")
         page = chunk.metadata.get("page")
         current_page_id = f"{source}:{page}"
+        print(f"Processing: {current_page_id}")
+        print(f"Current page ID: {current_page_id}")
 
         # If the page ID is the same as the last one, increment the index.
         if current_page_id == last_page_id:
@@ -105,4 +107,5 @@ def main(reset_db=False):
 
 
 if __name__ == "__main__":
-    main()
+    # main(reset_db=True)
+    main(reset_db=False)

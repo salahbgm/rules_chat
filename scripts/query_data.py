@@ -4,7 +4,7 @@ from langchain.prompts import ChatPromptTemplate
 from langchain_community.llms.ollama import Ollama
 from langchain_openai import ChatOpenAI
 import os
-from embedding import get_embedding_function
+from scripts.embedding import get_embedding_function
 
 from dotenv import load_dotenv
 
@@ -12,7 +12,7 @@ load_dotenv()
 
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 
-CHROMA_PATH = "chroma"
+CHROMA_PATH = "../data/VectorStores/chroma"
 
 PROMPT_TEMPLATE = """
 Answer the question based only on the following context:
@@ -54,8 +54,8 @@ def query_rag(query_text: str):
     sources = [doc.metadata.get("id", None) for doc, _score in results]
     formatted_response = f"Response: {response_text}\nSources: {sources}"
     print(formatted_response)
-    return response_text
+    return formatted_response
 
 
 if __name__ == "__main__":
-    main()
+    query_rag("What is the end of the Uno ?")
