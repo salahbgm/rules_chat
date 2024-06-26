@@ -1,6 +1,6 @@
 # From pytest, test the embeddings function `get_embedding_function`:
 import pytest
-from embedding import get_embedding_function
+from scripts.embedding import get_embedding_function
 
 
 def test_get_embedding_function():

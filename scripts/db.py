@@ -4,11 +4,11 @@ import shutil
 from langchain_community.document_loaders import PyPDFDirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.schema.document import Document
-from scripts.embedding import get_embedding_function
+from embedding import get_embedding_function
 from langchain_community.vectorstores import Chroma
 
-CHROMA_PATH = "data/VectorStores/chroma"
-DATA_PATH = "data/board_games"
+CHROMA_PATH = "chroma"
+DATA_PATH = "data"
 
 
 def load_documents():
