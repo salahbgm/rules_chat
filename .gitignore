@@ -1,2 +1,9 @@
 ragapp
+chroma
 data
+
+.env
+
+# For JetBrains IDEs
+.idea
+
